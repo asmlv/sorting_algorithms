@@ -13,7 +13,7 @@ func Greater(a, b int) bool {
 	return a > b
 }
 
-// SelectionSort algorithm
+// SelectionSort algorithm realization
 func SelectionSort(arr []int, predicate Order) {
 	for i := 0; i < len(arr); i++ {
 		smallestPos := i
@@ -23,5 +23,14 @@ func SelectionSort(arr []int, predicate Order) {
 			}
 		}
 		arr[i], arr[smallestPos] = arr[smallestPos], arr[i]
+	}
+}
+
+// InsertionSort algorithm realization
+func InsertionSort(arr []int, predicate Order) {
+	for i := 1; i < len(arr); i++ {
+		for j := i; j > 0 && predicate(arr[j], arr[j-1]); j-- {
+			arr[j-1], arr[j] = arr[j], arr[j-1]
+		}
 	}
 }
