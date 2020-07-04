@@ -2,17 +2,15 @@ package algorithms
 
 // BubbleSort algorithm realization
 func BubbleSort(arr []int, predicate Order) {
-	for i := 0; i < len(arr); i++ {
-		wasSwap := false
-		for j := 0; j < len(arr)-i-1; j++ {
-			if predicate(arr[j+1], arr[j]) {
-				arr[j], arr[j+1] = arr[j+1], arr[j]
+	var N = len(arr)
+	wasSwap := true
+	for wasSwap {
+		wasSwap = false
+		for i := 1; i < N; i++ {
+			if predicate(arr[i], arr[i-1]) {
+				arr[i-1], arr[i] = arr[i], arr[i-1]
 				wasSwap = true
 			}
 		}
-		if !wasSwap {
-			return
-		}
 	}
-
 }
