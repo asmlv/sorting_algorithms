@@ -2,25 +2,26 @@ package algorithms
 
 var _predicate Order = Less
 
-func partition(arr []int, p, r int) int {
-	q := p
-	for u := p; u < r; u++ {
-		if _predicate(arr[u], arr[r]) {
-			arr[q], arr[u] = arr[u], arr[q]
-			q++
+func getPartitionIndex(arr []int, left, right int) int {
+	partitionIndex := left
+	base := &arr[right]
+	for current := left; current < right; current++ {
+		if _predicate(arr[current], *base) {
+			arr[partitionIndex], arr[current] = arr[current], arr[partitionIndex]
+			partitionIndex++
 		}
 	}
-	arr[q], arr[r] = arr[r], arr[q]
-	return q
+	arr[partitionIndex], *base = *base, arr[partitionIndex]
+	return partitionIndex
 }
 
-func quickSort(arr []int, p, r int) {
-	if p >= r {
+func quickSort(arr []int, left, right int) {
+	if left >= right {
 		return
 	}
-	q := partition(arr, p, r)
-	quickSort(arr, p, q-1)
-	quickSort(arr, q+1, r)
+	partitionIndex := getPartitionIndex(arr, left, right)
+	quickSort(arr, left, partitionIndex-1)
+	quickSort(arr, partitionIndex+1, right)
 }
 
 // QuickSort algorithm realization
