@@ -1,17 +1,29 @@
 package algorithms
 
+import (
+	"math/rand"
+	"time"
+)
+
 var _predicate Order = Less
+
+func getRandomIndex(left, right int) int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(right-left) + left
+}
 
 func getPartitionIndex(arr []int, left, right int) int {
 	partitionIndex := left
-	base := &arr[right]
+	randomIndex := getRandomIndex(left, right)
+	arr[randomIndex], arr[right] = arr[right], arr[randomIndex]
+	// last element is a base element (index == right)
 	for current := left; current < right; current++ {
-		if _predicate(arr[current], *base) {
+		if _predicate(arr[current], arr[right]) {
 			arr[partitionIndex], arr[current] = arr[current], arr[partitionIndex]
 			partitionIndex++
 		}
 	}
-	arr[partitionIndex], *base = *base, arr[partitionIndex]
+	arr[partitionIndex], arr[right] = arr[right], arr[partitionIndex]
 	return partitionIndex
 }
 
